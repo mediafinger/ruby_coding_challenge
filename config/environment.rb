@@ -1,3 +1,6 @@
+# Make ENV variables available
+require_relative 'settings'
+
 # Load the Rails application.
 require_relative 'application'
 
