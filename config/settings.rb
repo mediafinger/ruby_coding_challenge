@@ -15,6 +15,12 @@ class Settings
     public_send(var_name.to_sym).to_s == other_value.to_s
   end
 
-  register :callback_url, default: "http://localhost:3000/callback"
-  # register :environment,  default: ENV["RACK_ENV"] || "development"
+  register :github_callback_url,  default: "http://localhost:3000/auth/github/callback"
+  register :github_client_id
+  register :github_client_secret
 end
+
+# Either set ENV vars or add secrets to this file, which is in .gitignore
+require 'settings.local.rb' if File.exists?('settings.local.rb')
+# inside use this syntax:
+# Settings.register :password, default: "secret"
