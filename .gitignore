@@ -1,0 +1,18 @@
+.byebug_history
+.rspec
+
+/.bundle
+/coverage/
+/log
+/node_modules/
+/public/system
+/spec/tmp
+/tmp
+/vendor/bundle
+
+config/initializers/secret_token.rb
+config/master.key
+rerun.txt
+
+# Only include if you have production secrets in this file, which is no longer a Rails default
+# config/secrets.yml
