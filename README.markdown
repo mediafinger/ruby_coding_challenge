@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/mediafinger/ruby_coding_challenge.svg?branch=master)](https://travis-ci.com/mediafinger/ruby_coding_challenge)
+
 # Ruby Coding Challenge
 
 This app allows _Admins_ to create _Ruby Coding Challenges_ which consist of one or multiple _Tasks_.
