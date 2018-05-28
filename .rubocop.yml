@@ -7,6 +7,8 @@ AllCops:
     - config.ru
     - bin/**
     - db/schema.rb
+    - node_modules/**/*
+    - vendor/**/*
 
 Lint/AmbiguousBlockAssociation:
   Exclude:
@@ -14,6 +16,9 @@ Lint/AmbiguousBlockAssociation:
 
 Layout/EmptyLineAfterMagicComment:
   Enabled: true
+
+Layout/ExtraSpacing:
+  Enabled: false
 
 Layout/IndentHash:
   EnforcedStyle: consistent
