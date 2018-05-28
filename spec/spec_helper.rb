@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "../config/settings.rb"
 
 # Conventionally, all specs live under a `spec` directory,

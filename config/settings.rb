@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Settings
   def self.set(var_name, value)
     instance_variable_set("@#{var_name}", value)
@@ -21,6 +23,6 @@ class Settings
 end
 
 # Either set ENV vars or add secrets to this file, which is in .gitignore
-require 'settings.local.rb' if File.exists?('settings.local.rb')
+require "settings.local.rb" if File.exist?("settings.local.rb")
 # inside use this syntax:
 # Settings.register :password, default: "secret"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Settings do
   before do
     ENV["SOME_TEST_ENV_VAR"] = "settings_test"
