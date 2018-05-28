@@ -15,7 +15,7 @@ require "action_view/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(*Rails.groups)
+Bundler.require(:default, Rails.env)
 
 module Rcc
   class Application < Rails::Application
@@ -27,7 +27,19 @@ module Rcc
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    # Don't generate system test files.
-    config.generators.system_tests = nil
+    config.generators do |g|
+      g.orm :active_record, primary_key_type: :uuid
+
+      g.helper false
+      g.javascripts false
+      g.stylesheets = false
+
+      g.controller_specs false
+      g.factory_bot false
+      g.helper_specs false
+      g.view_specs false
+
+      g.system_tests = nil
+    end
   end
 end
