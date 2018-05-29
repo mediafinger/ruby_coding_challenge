@@ -18,8 +18,9 @@ There can be winners per _Task_ and winners of the whole _Ruby Coding Challenge_
 
 ## TODOs
 
-- [ ] Create Rails 5.2 app
-- [ ] Setup Travis CI
+- [x] Create Rails 5.2 app
+- [x] Setup Travis CI
+- [x] Setup Heroku
 - [ ] Create User Model
 - [ ] Setup GitHub Oauth
 - [ ] Create Challenge Model
@@ -50,9 +51,13 @@ After the app was setup, run the tests:
 
 `bundle exec rake rspec`
 
-Automatic testing is setup with Travis CI, which executes:
+### Pushing to master
 
-`bundle exec rake ci`
+Automatic testing is setup with **Travis CI**, which executes:
+
+`bundle exec rake ci` _== rake rubocop bundle:audit rspec_
+
+When the build was successful, it will automatically be deployed to **Heroku**
 
 ### Run the app
 
