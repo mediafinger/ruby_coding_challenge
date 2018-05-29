@@ -16,4 +16,17 @@ ActiveRecord::Schema.define(version: 2018_05_29_003056) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "email"
+    t.string "name"
+    t.string "nick"
+    t.string "image"
+    t.string "url"
+    t.string "provider"
+    t.string "provider_uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider", "provider_uid"], name: "index_users_on_provider_and_provider_uid", unique: true
+  end
+
 end
