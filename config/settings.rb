@@ -17,12 +17,16 @@ class Settings
     public_send(var_name.to_sym).to_s == other_value.to_s
   end
 
-  register :github_callback_url,  default: "http://localhost:3000/auth/github/callback"
+  register :host,                  default: "http://localhost:3000/"
+  register :github_callback_path,  default: "auth/github/callback"
+  register :github_callback_url,   default: Settings.host + Settings.github_callback_path
   register :github_client_id
   register :github_client_secret
-end
 
-# Either set ENV vars or add secrets to this file, which is in .gitignore
-require "settings.local.rb" if File.exist?("settings.local.rb")
-# inside use this syntax:
-# Settings.register :password, default: "secret"
+  # Don't add secrets as 'default' values here!
+  # Either set ENV vars for secrets
+  # or add them to this file, which is in .gitignore:
+  load "config/settings.local.rb" if File.exist?("config/settings.local.rb")
+  # inside use this syntax:
+  # Settings.set :password, "secret"
+end

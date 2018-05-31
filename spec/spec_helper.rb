@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+ENV["RAILS_ENV"] ||= "test"
+
 require_relative "../config/settings.rb"
 
 # Conventionally, all specs live under a `spec` directory,

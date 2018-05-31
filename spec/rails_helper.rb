@@ -2,8 +2,6 @@
 
 require "spec_helper"
 
-ENV["RAILS_ENV"] ||= "test"
-
 require File.expand_path("../config/environment", __dir__)
 
 # Prevent database truncation if the environment is production
@@ -14,6 +12,9 @@ require "rspec/rails"
 
 # require FactoryGirl / FactoryBot
 require "support/factory_bot"
+
+# to test oauth behavior
+require "omniauth"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -35,6 +36,11 @@ require "support/factory_bot"
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  config.before(:each, type: :feature) do
+    # Clean up the authentication mock before each feature spec
+    OmniAuth.config.mock_auth[:github] = nil
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
