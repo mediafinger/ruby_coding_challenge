@@ -21,8 +21,8 @@ There can be winners per _Task_ and winners of the whole _Ruby Coding Challenge_
 - [x] Create Rails 5.2 app
 - [x] Setup Travis CI
 - [x] Setup Heroku
-- [ ] Create User Model
-- [ ] Setup GitHub Oauth
+- [x] Create User Model
+- [x] Setup GitHub Oauth
 - [ ] Create Challenge Model
 - [ ] Create Task Model
 - [ ] Setup Code Syntax Highlighting
@@ -30,6 +30,10 @@ There can be winners per _Task_ and winners of the whole _Ruby Coding Challenge_
 - [ ] Setup Solution Validation
 - [ ] Setup Rating Calculation
 - [ ] Setup Leaderboard
+- [ ] Setup GDPR Privacy Policy
+- [ ] Setup Delete User (ask to keep provider and provider_uid & anonymize)
+- [ ] Setup User Info retrieval (logged in only)
+- [ ] Setup Cookie Message(?)
 
 ## Development
 
