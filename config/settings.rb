@@ -17,9 +17,9 @@ class Settings
     public_send(var_name.to_sym).to_s == other_value.to_s
   end
 
-  register :host,                  default: "http://localhost:3000/"
+  register :base_host,             default: "http://localhost:3000/"
   register :github_callback_path,  default: "auth/github/callback"
-  register :github_callback_url,   default: Settings.host + Settings.github_callback_path
+  register :github_callback_url,   default: Settings.base_host + Settings.github_callback_path
   register :github_client_id
   register :github_client_secret
 
