@@ -1,6 +1,21 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  has_many :creations
+  has_many :challenges, through: :creations
+
+  has_many :rating_aggregators
+  has_many :rating_methods
+  has_many :specs
+  has_many :tasks
+
+  has_many :contestants
+  has_many :solutions, through: :contestants
+  has_many :solved_tasks, through: :solutions, source: :task
+
+  has_many :invitations, foreign_key: "creator_id"
+  has_many :invitations, foreign_key: "invitee_id"
+
   validates :nick,         presence: true
   validates :provider,     presence: true
   validates :provider_uid, presence: true
@@ -17,6 +32,10 @@ class User < ApplicationRecord
 
       user.save!
     end
+  end
+
+  def admin?
+    roles.include?(:admin)
   end
 
   def name_or_nick
