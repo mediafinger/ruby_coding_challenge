@@ -30,6 +30,10 @@ Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
   IndentationWidth: 2
 
+Metrics:
+  Exclude:
+    - db/**/*
+
 Metrics/AbcSize:
   Max: 25
 
@@ -52,6 +56,9 @@ Metrics/MethodLength:
 
 Metrics/PerceivedComplexity:
   Max: 8
+
+Naming/VariableNumber:
+  Enabled: false
 
 RSpec/AlignLeftLetBrace:
   Enabled: true
