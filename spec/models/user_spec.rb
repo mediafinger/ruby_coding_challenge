@@ -6,22 +6,7 @@ RSpec.describe User, type: :model do
   describe ".find_or_create_from" do
     subject(:user) { described_class.find_or_create_from(auth) }
 
-    let(:auth) do
-      {
-        provider: "github",
-        uid: "457782",
-        info: {
-          nickname: "mediafinger",
-          email: nil,
-          name: "Andreas Finger",
-          image: "https://avatars0.githubusercontent.com/u/457782?v=4",
-          urls: {
-            GitHub: "https://github.com/mediafinger",
-            Blog: "https://mediafinger.github.io/",
-          },
-        },
-      }
-    end
+    let(:auth) { build(:github_auth_hash) }
 
     context "when creation successful" do
       it { expect { user }.to change { User.count }.by(1) }
@@ -40,6 +25,7 @@ RSpec.describe User, type: :model do
 
       it { expect { user }.not_to change { User.count } }
       it { expect(user.id).to eq(user_1.id) }
+      it { expect(user.admin?).to eq(false) }
 
       it "updates current user information" do
         expect(user.email).to eq(auth.dig(:info, :email))
@@ -47,6 +33,22 @@ RSpec.describe User, type: :model do
         expect(user.nick).to  eq(auth.dig(:info, :nickname))
         expect(user.image).to eq(auth.dig(:info, :image))
         expect(user.url).to   eq(auth.dig(:info, :urls, :Blog))
+      end
+
+      describe "#admin?" do
+        before do
+          user_1.roles << :admin
+          user_1.save!
+        end
+
+        it "will retrieve the admin user", :aggregate_failures do
+          expect(user_1.admin?).to eq(true)
+
+          expect { user }.not_to change { User.count }
+
+          expect(user.id).to eq(user_1.id)
+          expect(user.admin?).to eq(true)
+        end
       end
     end
 

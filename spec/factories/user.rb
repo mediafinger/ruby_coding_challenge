@@ -6,5 +6,9 @@ FactoryBot.define do
     nick "mediafinger"
     provider "github"
     sequence(:provider_uid, 1000) { |n| n }
+
+    trait :admin do
+      roles [:admin]
+    end
   end
 end

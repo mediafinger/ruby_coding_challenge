@@ -35,7 +35,7 @@ class User < ApplicationRecord
   end
 
   def admin?
-    roles.include?(:admin)
+    roles.include?("admin")
   end
 
   def name_or_nick
