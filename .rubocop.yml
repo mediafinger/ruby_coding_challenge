@@ -92,6 +92,9 @@ RSpec/NamedSubject:
 RSpec/NestedGroups:
   Max: 4
 
+RSpec/NotToNot:
+  Enabled: false
+
 Style/BracesAroundHashParameters:
   Enabled: false
 

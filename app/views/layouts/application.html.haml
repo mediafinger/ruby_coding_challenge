@@ -8,11 +8,33 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    - if current_user
-      %b= "Hello #{current_user.name}"
+    %span.login-status
+      - if current_user
+        %b= "Hello #{current_user.name}"
+        |
+        = link_to "Logout", logout_path, method: :delete
+
+      - else
+        %a{ href: "/auth/github", title: "Login with GitHub" }
+          Login with GitHub
+
+    %span.navigation
       |
-      = link_to "Logout", logout_path, method: :delete
-    - else
-      %a{ href: "/auth/github", title: "Login with GitHub" }
-        Login with GitHub
-    = yield
+      = link_to "Challenges", challenges_path
+
+    - if current_user&.admin?
+      .admin.nav
+        %b= "Admin Section: "
+        |
+        = link_to "Create Challenge", new_challenge_path
+
+    %br
+    %hr
+    %br
+
+    - flash.each do |type, message|
+      %div{class: "flash #{type}" }
+        = message
+
+    .main
+      = yield

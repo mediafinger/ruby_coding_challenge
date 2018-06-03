@@ -15,6 +15,27 @@ RSpec.feature "AdminWorkflow", type: :feature do
 
     login_succesfully(omniauth_hash: build(:github_auth_hash, provider: provider, uid: provider_uid))
 
+    expect_admin_section
+    expect_interface_links
+
+    create_challenge
+
     logout
+  end
+
+  private
+
+  def expect_admin_section
+    expect(page).to have_text("Admin Section")
+    expect(page).to have_link("Create Challenge")
+  end
+
+  def expect_interface_links
+    expect(page).to have_link("Challenges")
+  end
+
+  def create_challenge
+    click_link("Create Challenge")
+    expect(page).to have_text("New Challenge")
   end
 end

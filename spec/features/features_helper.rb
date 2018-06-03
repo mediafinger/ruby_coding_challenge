@@ -4,7 +4,7 @@ require "rails_helper"
 
 def login_succesfully(omniauth_hash: build(:github_auth_hash))
   mock_omniauth(omniauth_hash: omniauth_hash)
-  click_link "Login with GitHub"
+  click_link("Login with GitHub")
 
   expect(page).to have_text(omniauth_hash.dig(:info, :name))
   expect(page).to have_link("Logout")
@@ -13,14 +13,14 @@ end
 def login_with_invalid_credentials
   mock_omniauth_invalid
 
-  visit "/"
-  click_link "Login with GitHub"
+  visit("/")
+  click_link("Login with GitHub")
 
   expect(page).to have_link("Login with GitHub")
 end
 
 def logout
-  click_link "Logout"
+  click_link("Logout")
   expect(page).to have_link("Login with GitHub")
 end
 

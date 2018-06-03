@@ -11,6 +11,21 @@ RSpec.feature "ContestantWorkflow", type: :feature do
 
     login_succesfully
 
+    expect_interface_links
+    expect_admin_section_to_be_forbidden
+
     logout
+  end
+
+  def expect_interface_links
+    expect(page).to have_link("Challenges")
+  end
+
+  def expect_admin_section_to_be_forbidden
+    expect(page).not_to have_text("Admin Section")
+
+    visit("/challenges/new")
+    expect(page).to have_current_path("/")
+    # expect(find(".flash.alert")).to have_content("Forbidden: you don't have 'admin' rights.")
   end
 end
