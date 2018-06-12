@@ -1,0 +1,21 @@
+= form_with model: @competition, local: true do |f|
+  = render partial: "/layouts/errors", locals: { record: @competition }
+
+  .field
+    .label Description:
+    = f.text_area :description, placeholder: "will be markdown enabled in the future", maxlength: 65535
+
+  .field
+    .label Open from:
+    = f.datetime_select :open_from, default: Date.today
+
+  .field
+    .label Open until:
+    = f.datetime_select :open_until, default: Date.today
+
+  .field
+    .label Write your rating method:
+    = f.text_area :rating_method, placeholder: "must be a Ruby proc that reacts to `.call`", maxlength: 65535
+
+  .field.actions
+    = f.submit "Submit"

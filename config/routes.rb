@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get "auth/failure", to: redirect("/") # TODO: set flash[:alert]
   delete "logout", to: "sessions#destroy", as: "logout" # TODO: set flash[:alert]
 
-  resources :challenges, only: [:create, :new, :index, :show]
+  resources :competitions, only: [:create, :new, :index, :show]
 
   root to: "pages#home"
 end

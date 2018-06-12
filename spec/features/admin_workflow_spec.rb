@@ -3,12 +3,12 @@
 require_relative "features_helper.rb"
 
 RSpec.feature "AdminWorkflow", type: :feature do
+  let(:provider)     { "github" }
+  let(:provider_uid) { "20359" }
+
   before do
     create(:user, :admin, provider: provider, provider_uid: provider_uid)
   end
-
-  let(:provider)     { "github" }
-  let(:provider_uid) { "20359" }
 
   scenario "User logs in, does stuff, and logs out again" do
     login_with_invalid_credentials
@@ -18,7 +18,7 @@ RSpec.feature "AdminWorkflow", type: :feature do
     expect_admin_section
     expect_interface_links
 
-    create_challenge
+    create_competition
 
     logout
   end
@@ -27,15 +27,29 @@ RSpec.feature "AdminWorkflow", type: :feature do
 
   def expect_admin_section
     expect(page).to have_text("Admin Section")
-    expect(page).to have_link("Create Challenge")
+    expect(page).to have_link("Create Competition")
   end
 
   def expect_interface_links
-    expect(page).to have_link("Challenges")
+    expect(page).to have_link("Competitions")
   end
 
-  def create_challenge
-    click_link("Create Challenge")
-    expect(page).to have_text("New Challenge")
+  def create_competition
+    click_link("Create Competition")
+    expect(page).to have_text("New Competition")
+
+    fill_in "competition_description", with: "Ruby Golf"
+    # fill_in "competition_open_from", with: Date.today.to_s
+    # fill_in "competition_open_until", with: 7.days.from_now.to_s
+    click_button "Submit"
+
+    expect(page).to have_text("Error: Competition not created.")
+
+    expect(page).to have_text("rating method")
+    fill_in "competition_rating_method", with: "2"
+    click_button "Submit"
+
+    expect(page).to have_text("Competition was successfully created.")
+    expect(page).to have_text("Ruby Golf")
   end
 end

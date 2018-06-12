@@ -20,13 +20,13 @@
 
     %span.navigation
       |
-      = link_to "Challenges", challenges_path
+      = link_to "Competitions", competitions_path
 
     - if current_user&.admin?
       .admin.nav
         %b= "Admin Section: "
         |
-        = link_to "Create Challenge", new_challenge_path
+        = link_to "Create Competition", new_competition_path
 
     %br
     %hr

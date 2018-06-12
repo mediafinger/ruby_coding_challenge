@@ -18,13 +18,13 @@ RSpec.feature "ContestantWorkflow", type: :feature do
   end
 
   def expect_interface_links
-    expect(page).to have_link("Challenges")
+    expect(page).to have_link("Competitions")
   end
 
   def expect_admin_section_to_be_forbidden
     expect(page).not_to have_text("Admin Section")
 
-    visit("/challenges/new")
+    visit("/competitions/new")
     expect(page).to have_current_path("/")
     # expect(find(".flash.alert")).to have_content("Forbidden: you don't have 'admin' rights.")
   end
