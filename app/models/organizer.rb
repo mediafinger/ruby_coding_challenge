@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Challenge < ApplicationRecord
+class Organizer < ApplicationRecord
+  belongs_to :user
   belongs_to :competition
-  belongs_to :task
 end

@@ -1,18 +1,13 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  has_many :creations
-  has_many :challenges, through: :creations
-
-  has_many :rating_aggregators
-  has_many :rating_methods
-  has_many :specs
-  has_many :tasks
-
+  has_many :organizers
+  has_many :competitions, through: :organizers
+  has_many :challengers
+  has_many :tasks, through: :challengers
   has_many :contestants
   has_many :solutions, through: :contestants
   has_many :solved_tasks, through: :solutions, source: :task
-
   has_many :invitations, foreign_key: "creator_id"
   has_many :invitations, foreign_key: "invitee_id"
 
@@ -38,7 +33,7 @@ class User < ApplicationRecord
     roles.include?("admin")
   end
 
-  def name_or_nick
-    name || nick
+  def nickname
+    name || nick || email
   end
 end
