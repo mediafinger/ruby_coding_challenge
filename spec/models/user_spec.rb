@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
       it { expect(user.image).to        eq(auth.dig(:info, :image)) }
       it { expect(user.url).to          eq(auth.dig(:info, :urls, :Blog)) }
       it { expect(user.provider).to     eq(auth[:provider]) }
-      it { expect(user.provider_uid).to eq(auth[:uid]) }
+      it { expect(user.provider_uid).to eq(auth[:uid].to_s) }
     end
 
     context "when retrieval successful" do

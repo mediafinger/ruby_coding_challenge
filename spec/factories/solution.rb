@@ -2,7 +2,8 @@
 
 FactoryBot.define do
   factory :solution do
+    competition
     task
-    code "true"
+    code "puts 'hello world'"
   end
 end

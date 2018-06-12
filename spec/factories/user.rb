@@ -5,7 +5,7 @@ FactoryBot.define do
     name "Andreas Finger"
     nick "mediafinger"
     provider "github"
-    sequence(:provider_uid, 1000) { |n| n }
+    provider_uid { rand(9999999) }
 
     trait :admin do
       roles [:admin]

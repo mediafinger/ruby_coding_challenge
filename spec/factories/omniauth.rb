@@ -6,7 +6,7 @@ FactoryBot.define do
 
     # Setup variables that can be used later:
     ignore do
-      id { SecureRandom.random_number(1_000_000_000).to_s }
+      id { rand(9999999) }
       email "andy@example.com"
       name { "#{first_name} #{last_name}" }
       nickname "mediafinger"
@@ -16,11 +16,12 @@ FactoryBot.define do
       last_name "Finger"
       link { "http://www.github.com/#{nickname}" }
 
-      locale "en_US"
-      location_id "123456789"
-      location_name "Barcelona, Spain"
-      timezone("Europe/Berlin")
-      updated_time { SecureRandom.random_number(1.month).seconds.ago }
+      # locale "en_US"
+      # location_id "123456789"
+      # location_name "Barcelona, Spain"
+      # timezone("Europe/Berlin")
+      # updated_time { SecureRandom.random_number(1.month).seconds.ago }
+
       token { SecureRandom.urlsafe_base64(100).delete("-_").first(100) }
       expires_at { SecureRandom.random_number(1.month).seconds.from_now }
     end

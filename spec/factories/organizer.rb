@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :challenge do
+  factory :organizer do
+    user
     competition
-    task
   end
 end
