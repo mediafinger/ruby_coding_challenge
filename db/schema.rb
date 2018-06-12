@@ -10,40 +10,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_31_221700) do
+ActiveRecord::Schema.define(version: 2018_06_12_222200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
+  create_table "challengers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "task_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_challengers_on_task_id"
+    t.index ["user_id", "task_id"], name: "index_challengers_on_user_id_and_task_id", unique: true
+    t.index ["user_id"], name: "index_challengers_on_user_id"
+  end
+
   create_table "challenges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "rating_aggregator_id"
+    t.uuid "competition_id"
+    t.uuid "task_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id", "task_id"], name: "index_challenges_on_competition_id_and_task_id", unique: true
+    t.index ["competition_id"], name: "index_challenges_on_competition_id"
+    t.index ["task_id"], name: "index_challenges_on_task_id"
+  end
+
+  create_table "competitions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "description"
+    t.text "rating_method"
     t.datetime "open_from"
     t.datetime "open_until"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["rating_aggregator_id"], name: "index_challenges_on_rating_aggregator_id"
   end
 
   create_table "contestants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "solution_id"
+    t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["solution_id"], name: "index_contestants_on_solution_id"
     t.index ["user_id", "solution_id"], name: "index_contestants_on_user_id_and_solution_id", unique: true
     t.index ["user_id"], name: "index_contestants_on_user_id"
-  end
-
-  create_table "creations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
-    t.uuid "challenge_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["challenge_id", "user_id"], name: "index_creations_on_challenge_id_and_user_id", unique: true
-    t.index ["challenge_id"], name: "index_creations_on_challenge_id"
-    t.index ["user_id"], name: "index_creations_on_user_id"
   end
 
   create_table "invitations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -61,63 +71,34 @@ ActiveRecord::Schema.define(version: 2018_05_31_221700) do
     t.index ["invitee_id"], name: "index_invitations_on_invitee_id"
   end
 
-  create_table "rating_aggregators", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "organizers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
-    t.text "code"
-    t.text "description"
+    t.uuid "competition_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_rating_aggregators_on_user_id"
-  end
-
-  create_table "rating_methods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
-    t.text "code"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_rating_methods_on_user_id"
-  end
-
-  create_table "requirements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "task_id"
-    t.uuid "spec_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["spec_id"], name: "index_requirements_on_spec_id"
-    t.index ["task_id", "spec_id"], name: "index_requirements_on_task_id_and_spec_id", unique: true
-    t.index ["task_id"], name: "index_requirements_on_task_id"
+    t.index ["competition_id", "user_id"], name: "index_organizers_on_competition_id_and_user_id", unique: true
+    t.index ["competition_id"], name: "index_organizers_on_competition_id"
+    t.index ["user_id"], name: "index_organizers_on_user_id"
   end
 
   create_table "solutions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "competition_id"
     t.uuid "task_id"
     t.text "code"
-    t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["competition_id", "task_id"], name: "index_solutions_on_competition_id_and_task_id", unique: true
+    t.index ["competition_id"], name: "index_solutions_on_competition_id"
     t.index ["task_id"], name: "index_solutions_on_task_id"
   end
 
-  create_table "specs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
-    t.text "code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_specs_on_user_id"
-  end
-
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
-    t.uuid "challenge_id"
-    t.uuid "rating_method_id"
     t.text "description"
+    t.text "spec"
     t.datetime "open_from"
     t.datetime "open_until"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["challenge_id"], name: "index_tasks_on_challenge_id"
-    t.index ["rating_method_id"], name: "index_tasks_on_rating_method_id"
-    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
