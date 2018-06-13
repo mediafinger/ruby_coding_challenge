@@ -1,0 +1,6 @@
+- if record.errors.any?
+  #error_explanation.failure
+    %h3= "#{pluralize(record.errors.count, "error")} prohibited this #{record.class.name} from being saved:"
+    %ul
+      - record.errors.full_messages.each do |message|
+        %li= message
