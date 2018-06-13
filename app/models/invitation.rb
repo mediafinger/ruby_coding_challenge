@@ -5,15 +5,34 @@ class Invitation < ApplicationRecord
   belongs_to :invitee, class_name: "User", foreign_key: "invitee_id"
   belongs_to :entity, polymorphic: true
 
+  INVITABLE_TYPES = %w(Competition Task Solution).freeze
+
+  validates :creator, presence: true
+  validates :invitee, presence: true
+  validates :entity, presence: true
+
+  # record is the instance, attr the name 'entity', value is the entity
+  validates_each :entity do |record, attr, value|
+    if INVITABLE_TYPES.include?(record.entity_type)
+      record.errors.add(attr, "must be owned by creator") unless value.users.include?(record.creator)
+    else
+      record.errors.add(attr, "must be one of #{INVITABLE_TYPES}")
+    end
+  end
+
   def accept
     transaction do
-      send("accept_#{entity_type}")
+      send("accept_#{entity_type.to_s.downcase}")
       update!(answer: true, expires_at: Time.now)
     end
+
+    entity.reload.users
   end
 
   def decline
     update!(answer: false, expires_at: Time.now)
+
+    entity.reload.users
   end
 
   private
