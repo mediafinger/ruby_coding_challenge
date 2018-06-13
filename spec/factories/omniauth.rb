@@ -4,8 +4,8 @@ FactoryBot.define do
   factory :github_auth_hash, class: OmniAuth::AuthHash do
     skip_create
 
-    # Setup variables that can be used later:
-    ignore do
+    # Setup variables that can be used later: (transient == ignore)
+    transient do
       id { rand(9999999) }
       email "andy@example.com"
       name { "#{first_name} #{last_name}" }

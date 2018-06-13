@@ -12,12 +12,19 @@ class Task < ApplicationRecord
   validates :description, presence: true
   validates :spec, presence: true
 
-  # returns either true or raises an error
-  def test(solution_code = "def output(input); input.reverse; end;")
-    testable = "class Testable; #{solution_code}; end"
-
-    code = "require 'rspec'; describe Testable do; subject(:output) { described_class.output(input) }; let(:input) { 'hello' }; it { expect(output).to eq('olleh') }; end;"
-
-    code.call(solution)
+  # returns either true or raises an error with the test output as message
+  def test(solution_code)
+    # TODO
+    #
+    # * store spec in text field
+    # * for testing:
+    #   * load solution code and insert into template class
+    #   * create Tempfile with solution class
+    #   * create Tempfile with loaded spec, require solution class in there
+    #   * execute rspec (or would minitest be easier?) against spec in Tempfile
+    #
+    #   return { success: runner.message }
+    # rescue StandardError => e # TODO: which exactly?
+    #   return { failure: e.message }
   end
 end
