@@ -14,7 +14,8 @@ class Invitation < ApplicationRecord
   # record is the instance, attr the name 'entity', value is the entity
   validates_each :entity do |record, attr, value|
     if INVITABLE_TYPES.include?(record.entity_type)
-      record.errors.add(attr, "must be owned by creator") unless value.users.include?(record.creator)
+      record.errors.add(attr, "must be owned by creator") unless
+        value.users.include?(record.creator) || record.creator.admin?
     else
       record.errors.add(attr, "must be one of #{INVITABLE_TYPES}")
     end

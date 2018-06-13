@@ -11,11 +11,23 @@ RSpec.describe Invitation, type: :model do
   describe "valid" do
     let(:entity) { build(:competition) }
 
-    before { create(:organizer, user: creator, competition: entity) }
+    context "when the invitation creator owns the entity" do
+      let(:creator) { create(:user, :admin) }
 
-    it { expect(invitation.valid?).to eq(true) }
-    it { expect(invitation.answer).to eq(nil) }
-    it { expect(invitation.expires_at).to be_within(2.seconds).of(7.days.from_now) }
+      before { create(:organizer, user: creator, competition: entity) }
+
+      it { expect(invitation.valid?).to eq(true) }
+      it { expect(invitation.answer).to eq(nil) }
+      it { expect(invitation.expires_at).to be_within(2.seconds).of(7.days.from_now) }
+    end
+
+    context "when the invitation creator is an admin" do
+      before { create(:organizer, user: creator, competition: entity) }
+
+      it { expect(invitation.valid?).to eq(true) }
+      it { expect(invitation.answer).to eq(nil) }
+      it { expect(invitation.expires_at).to be_within(2.seconds).of(7.days.from_now) }
+    end
   end
 
   describe "invalid" do
