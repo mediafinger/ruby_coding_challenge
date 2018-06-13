@@ -9,16 +9,17 @@ class Competition < ApplicationRecord
   has_many :tasks, through: :solutions
 
   validates :description, presence: true
-  validates :rating_method, presence: true
+  # validates :rating_method, presence: true
   validates :open_from, presence: true
-  validates :open_until, presence: true
+  # validates :open_until, presence: true
 
   def add_task(task)
     challenges.create!(task: task)
   end
   alias add_trial add_task
 
+  # use simple rating mechanism that removes all whitespaces and returns the number of characters
   def rate(code)
-    rating_method.call(code)
+    rating_method.present? ? rating_method.call(code) : code.gsub(/\s+/, "").length
   end
 end
