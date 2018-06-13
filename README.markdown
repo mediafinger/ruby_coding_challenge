@@ -23,7 +23,7 @@ There can be winners per _Task_ and winners of the whole _Ruby Coding Challenge_
 - [x] Setup Heroku
 - [x] Create User Model
 - [x] Setup GitHub Oauth
-- [ ] Create Challenge Model
+- [x] Create Competition Model
 - [ ] Create Task Model
 - [ ] Setup Code Syntax Highlighting
 - [ ] Setup Solution Model
@@ -47,7 +47,7 @@ Change into the new directory and run:
 
 After this finished run:
 
-`bin/rails setup` _this requires Postgresql_
+`bin/setup` _this requires Postgresql_
 
 ### Tests
 
