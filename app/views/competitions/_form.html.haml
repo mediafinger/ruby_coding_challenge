@@ -7,11 +7,11 @@
 
   .field
     .label Open from:
-    = f.datetime_select :open_from, default: Date.today
+    = f.datetime_select :open_from, default: Date.today, include_blank: true
 
   .field
     .label Open until:
-    = f.datetime_select :open_until, default: Date.today
+    = f.datetime_select :open_until, default: Date.today, include_blank: true
 
   .field
     .label Write your rating method:

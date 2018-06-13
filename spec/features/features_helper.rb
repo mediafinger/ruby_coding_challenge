@@ -45,3 +45,12 @@ def mock_omniauth_invalid
     OmniAuth::FailureEndpoint.new(env).redirect_to_failure
   }
 end
+
+# works for the default Chrome datetime_select
+def select_date(date:, field:)
+  select date.year.to_s,               from: "#{field}_1i"
+  select Date::MONTHNAMES[date.month], from: "#{field}_2i"
+  select date.day.to_s,                from: "#{field}_3i"
+  select "12",                         from: "#{field}_4i"
+  select "00",                         from: "#{field}_5i"
+end

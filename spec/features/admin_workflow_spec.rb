@@ -39,14 +39,13 @@ RSpec.feature "AdminWorkflow", type: :feature do
     expect(page).to have_text("New Competition")
 
     fill_in "competition_description", with: "Ruby Golf"
-    # fill_in "competition_open_from", with: Date.today.to_s
     # fill_in "competition_open_until", with: 7.days.from_now.to_s
     click_button "Submit"
 
     expect(page).to have_text("Error: Competition not created.")
 
-    expect(page).to have_text("rating method")
-    fill_in "competition_rating_method", with: "2"
+    select_date(date: Date.today + 3.days, field: "competition_open_from")
+    # fill_in "competition_rating_method", with: "2"
     click_button "Submit"
 
     expect(page).to have_text("Competition was successfully created.")
