@@ -24,6 +24,10 @@ class ApplicationController < ActionController::Base
       flash[:alert] = "Forbidden: you don't have 'admin' rights."
       redirect_to root_path
     end
+  # pass local variables to views instead of @instance variables
+  # render without a view name uses the name of the action
+  def locals(variables_hash)
+    render locals: variables_hash
   end
   helper_method :redirect_non_admin
   # rubocop:enable Style/GuardClause

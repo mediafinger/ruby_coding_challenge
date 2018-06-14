@@ -3,32 +3,46 @@
 class CompetitionsController < ApplicationController
   before_action :authenticate, except: [:index, :show]
   before_action :redirect_non_admin, except: [:index, :show]
+  before_action :find_record, only: [:show, :edit, :update]
 
   def index
-    @competitions = Competition.all
+    locals(competitions: Competition.all)
   end
 
   def show
-    @competition = Competition.find(params[:id])
+    locals(competition: @record)
   end
 
   def new
-    @competition = Competition.new
+    locals(competition: Competition.new)
   end
 
   def create
-    @competition = current_user.competitions.new(competition_params.to_h)
+    competition = Competition.new(competition_params.to_h)
 
-    if @competition.save
+    if competition.save
+      competition.add_organizer(current_user)
       flash[:notice] = "Competition was successfully created."
-      redirect_to competition_path(@competition)
+      redirect_to competition_path(competition)
     else
       flash[:alert] = "Error: Competition not created."
-      render :new
+      render :new, locals: { competition: competition }
     end
   end
 
+  def edit
+    locals(competition: @record)
+  end
+
+  def update
+    locals(competition: @record)
+  end
+
   private
+
+  def find_record
+    @record = Competition.find(params[:id])
+  end
 
   def competition_params
     params.require(:competition).permit(:description, :open_from, :open_until, :rating_method)
