@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   resources :competitions, only: [:create, :new, :index, :show]
 
   root to: "pages#home"
+
+  get "*unmatched_route", to: "application#route_not_found" # to avoid routing exceptions
 end

@@ -11,6 +11,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  # to avoid routing exceptions
+  def route_not_found
+    render "pages/error_404", status: :not_found
+  end
+
   private
 
   # rubocop:disable Style/GuardClause
