@@ -2,8 +2,8 @@
 
 class CompetitionsController < ApplicationController
   before_action :authenticate, except: [:index, :show]
-  before_action :redirect_non_admin, except: [:index, :show]
   before_action :find_record, only: [:show, :edit, :update]
+  before_action :redirect_non_owner, except: [:index, :show] # only admin can use #new and #create
 
   def index
     locals(competitions: Competition.all)

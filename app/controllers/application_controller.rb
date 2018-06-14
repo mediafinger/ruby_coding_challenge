@@ -18,17 +18,20 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # rubocop:disable Style/GuardClause
-  def redirect_non_admin
-    unless current_user.admin?
-      flash[:alert] = "Forbidden: you don't have 'admin' rights."
-      redirect_to root_path
-    end
   # pass local variables to views instead of @instance variables
   # render without a view name uses the name of the action
   def locals(variables_hash)
     render locals: variables_hash
   end
-  helper_method :redirect_non_admin
-  # rubocop:enable Style/GuardClause
+
+  def redirect_non_owner
+    return true if current_user.admin?
+    return true if @record&.users&.include?(current_user)
+    return true if @record&.user_id == current_user.id
+
+    logger.warn "User #{current_user.id} tried to access #{controller}:#{action} for record #{@record.class} #{@record&.id}."
+    flash[:alert] = "Forbidden: you don't have the necessary rights."
+    redirect_to root_path, status: 403
+  end
+  helper_method :redirect_non_owner
 end
