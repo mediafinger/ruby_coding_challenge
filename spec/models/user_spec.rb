@@ -34,28 +34,41 @@ RSpec.describe User, type: :model do
         expect(user.image).to eq(auth.dig(:info, :image))
         expect(user.url).to   eq(auth.dig(:info, :urls, :Blog))
       end
-
-      describe "#admin?" do
-        before do
-          user_1.roles << :admin
-          user_1.save!
-        end
-
-        it "will retrieve the admin user", :aggregate_failures do
-          expect(user_1.admin?).to eq(true)
-
-          expect { user }.not_to change { User.count }
-
-          expect(user.id).to eq(user_1.id)
-          expect(user.admin?).to eq(true)
-        end
-      end
     end
 
     context "when it fails" do
       let(:auth) { {} }
 
       it { expect { user }.to raise_error(ActiveRecord::RecordInvalid) }
+    end
+  end
+
+  describe "#add_role" do
+    let(:user) { build(:user) }
+
+    it "adds role as string", :aggregate_failures do
+      expect(user.roles).to eq []
+
+      user.add_role(:admin)
+
+      expect(user.roles).to eq ["admin"]
+      expect(user.admin?).to eq(true)
+    end
+
+    it "does not add a role twice", :aggregate_failures do
+      user.add_role("editor")
+      user.add_role(:editor)
+      expect(user.roles).to eq ["editor"]
+    end
+  end
+
+  describe "#admin?" do
+    let(:user) { build(:user) }
+    let(:admin_user) { build(:user, :admin) }
+
+    it "will identify the admin_user as admin", :aggregate_failures do
+      expect(user.admin?).to eq(false)
+      expect(admin_user.admin?).to eq(true)
     end
   end
 end

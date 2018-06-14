@@ -29,6 +29,11 @@ class User < ApplicationRecord
     end
   end
 
+  def add_role(role)
+    roles << role.to_s
+    update!(roles: roles.uniq)
+  end
+
   def admin?
     roles.include?("admin")
   end
