@@ -5,6 +5,6 @@ FactoryBot.define do
     creator { build(:user) }
     invitee { build(:user) }
     entity  { build(:solution) }
-    expires_at { 7.days.from_now }
+    expires_at { Time.zone.now + 7.days }
   end
 end
