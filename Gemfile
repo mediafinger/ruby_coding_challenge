@@ -11,6 +11,7 @@ gem "rails", "~> 5.2.0"
 
 gem "bootsnap", ">= 1.1.0", require: false
 gem "haml-rails", "~> 1.0"
+gem "lograge"
 gem "omniauth-github", "~>  1.3"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 3.11"

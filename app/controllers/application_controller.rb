@@ -27,4 +27,12 @@ class ApplicationController < ActionController::Base
   end
   helper_method :redirect_non_admin
   # rubocop:enable Style/GuardClause
+
+  # to add custom log information for lograge, e.g. a trace_id
+  # def append_info_to_payload(payload)
+  #   super
+  #   payload[:host] = request.host
+  #   payload[:params] = request.filtered_parameters
+  #   payload[:trace_id] = request.headers.trace_id
+  # end
 end

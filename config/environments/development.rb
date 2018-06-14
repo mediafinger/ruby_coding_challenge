@@ -40,6 +40,12 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
+  # Use default Ruby logging formatter so that PID and timestamp are not suppressed.
+  config.log_formatter = ::Logger::Formatter.new
+  # logger           = ActiveSupport::Logger.new(STDOUT)
+  # logger           = ActiveSupport::Logger.new("log/#{Rails.env}.log")
+  # config.logger    = ActiveSupport::TaggedLogging.new(logger)
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
