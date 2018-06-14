@@ -13,6 +13,21 @@ class Competition < ApplicationRecord
   validates :open_from, presence: true
   # validates :open_until, presence: true
 
+  # user can be a User or a user_id
+  def add_organizer(user)
+    user_id = user.is_a?(User) ? user.id : user
+
+    begin
+      organizers.create!(user_id: user_id)
+    rescue ActiveRecord::RecordNotUnique => e
+      logger.info "#{e.class} - User #{user_id} is already an Organizer of Competition #{id}."
+    rescue ActiveRecord::RecordInvalid => e
+      logger.info "#{e.class} - User #{user.inspect} could not be found or is no user object."
+    end
+
+    organizers.reload
+  end
+
   def add_task(task)
     challenges.create!(task: task)
   end
