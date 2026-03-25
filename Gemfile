@@ -7,7 +7,7 @@ source "https://rubygems.org"
 
 ruby "2.5.1"
 
-gem "rails", "~> 5.2.0"
+gem "rails", "~> 8.1.3"
 
 gem "bootsnap", ">= 1.1.0", require: false
 gem "haml-rails", "~> 1.0"
